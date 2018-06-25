@@ -7,7 +7,8 @@ import java.util.Set;
 
 public class Dijkstra {
 
-	public static Grafo calculateShortestPathFromSource(Grafo grafo, Nodo nodoOrigen) {
+	public static Grafo calcularRutaMasCortaDesdeOrigen(Grafo grafo, Nodo nodoOrigen) {
+		
 		nodoOrigen.setDistancia(0);
 
 		Set<Nodo> nodosVisitados = new HashSet<>();
@@ -17,44 +18,55 @@ public class Dijkstra {
 
 		while (nodosNoVisitados.size() != 0) {
 
-			Nodo currentNodo = getLowestDistanceNode(nodosNoVisitados);
+			Nodo nodoActual = obtenerNodoDistanciaMinima(nodosNoVisitados);
 
-			nodosNoVisitados.remove(currentNodo);
-			for (Entry<Nodo, Integer> adjacencyPair : currentNodo.getNodosAdyacentes().entrySet()) {
-				Nodo nodoAdyacente = adjacencyPair.getKey();
-				Integer edgeWeight = adjacencyPair.getValue();
+			nodosNoVisitados.remove(nodoActual);
+
+			for (Entry<Nodo, Integer> adyacentesEntry : nodoActual.getNodosAdyacentes().entrySet()) {
+
+				Nodo nodoAdyacente = adyacentesEntry.getKey();
+				Integer costo = adyacentesEntry.getValue();
+
 				if (!nodosVisitados.contains(nodoAdyacente)) {
-					calculateMinimumDistance(nodoAdyacente, edgeWeight, currentNodo);
+					calcularDistanciaMinima(nodoAdyacente, costo, nodoActual);
 					nodosNoVisitados.add(nodoAdyacente);
 				}
+
 			}
-			nodosVisitados.add(currentNodo);
+			nodosVisitados.add(nodoActual);
 		}
 		return grafo;
 	}
 
-	private static Nodo getLowestDistanceNode(Set<Nodo> unsettledNodes) {
-		Nodo lowestDistanceNode = null;
-		int lowestDistance = Integer.MAX_VALUE;
-		for (Nodo node : unsettledNodes) {
-			int nodeDistance = node.getDistancia();
-			if (nodeDistance < lowestDistance) {
-				lowestDistance = nodeDistance;
-				lowestDistanceNode = node;
+	private static Nodo obtenerNodoDistanciaMinima(Set<Nodo> nodosNoVisitados) {
+
+		Nodo nodoDistanciaMinima = null;
+		int distanciaMinima = Integer.MAX_VALUE;
+
+		for (Nodo nodo : nodosNoVisitados) {
+			int nodoDistancia = nodo.getDistancia();
+			if (nodoDistancia < distanciaMinima) {
+				distanciaMinima = nodoDistancia;
+				nodoDistanciaMinima = nodo;
 			}
 		}
-		return lowestDistanceNode;
+
+		return nodoDistanciaMinima;
 	}
-	
-	private static void calculateMinimumDistance(Nodo evaluationNode,
-			  Integer edgeWeigh, Nodo sourceNode) {
-			    Integer sourceDistance = sourceNode.getDistancia();
-			    if (sourceDistance + edgeWeigh < evaluationNode.getDistancia()) {
-			        evaluationNode.setDistancia(sourceDistance + edgeWeigh);
-			        LinkedList<Nodo> shortestPath = new LinkedList<>(sourceNode.getCaminoMasCorto());
-			        shortestPath.add(sourceNode);
-			        evaluationNode.setCaminoMasCorto(shortestPath);
-			    }
-			}
+
+	private static void calcularDistanciaMinima(Nodo nodo, Integer costo, Nodo nodoOrigen) {
+
+		Integer distanciaOrigen = nodoOrigen.getDistancia();
+
+		if (distanciaOrigen + costo < nodo.getDistancia()) {
+
+			nodo.setDistancia(distanciaOrigen + costo);
+
+			LinkedList<Nodo> caminoMasCorto = new LinkedList<>(nodoOrigen.getCaminoMasCorto());
+
+			caminoMasCorto.add(nodoOrigen);
+			nodo.setCaminoMasCorto(caminoMasCorto);
+		}
+	}
 
 }
