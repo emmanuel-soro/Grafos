@@ -19,7 +19,7 @@ public class Nodo {
 		this.nombre = nombre;
 	}
 
-	public void addDestination(Nodo destino, int distancia) {
+	public void agregarDestino(Nodo destino, int distancia) {
 		nodosAdyacentes.put(destino, distancia);
 	}
 
