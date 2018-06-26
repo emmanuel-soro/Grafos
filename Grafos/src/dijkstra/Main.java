@@ -1,4 +1,4 @@
-package dijkstra.modelo1;
+package dijkstra;
 
 public class Main {
 

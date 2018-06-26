@@ -1,4 +1,4 @@
-package dijkstra.modelo1;
+package dijkstra;
 
 import java.util.HashMap;
 import java.util.LinkedList;
