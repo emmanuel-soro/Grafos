@@ -9,7 +9,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 /**
- * Grafo dirigido
+ * Grafo NO dirigido
  */
 class Grafo {
 	private int cantNodos;
@@ -22,10 +22,11 @@ class Grafo {
 			listaAdyacencia.add(new ArrayList<Integer>());
 		}
 	}
-
+	
+	
 	void agregarVertice(int nodoOrigen, int nodoDestino) {
 		listaAdyacencia.get(nodoOrigen).add(nodoDestino);
-		listaAdyacencia.get(nodoDestino).add(nodoOrigen);
+		listaAdyacencia.get(nodoDestino).add(nodoOrigen);//eliminar para convertir en dirigido
 	}
 
 	void BFS(int nodoInicial) {
