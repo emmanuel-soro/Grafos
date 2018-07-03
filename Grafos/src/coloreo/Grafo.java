@@ -1,28 +1,32 @@
 package coloreo;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.List;
 
 // This class represents an undirected graph using adjacency list
 public class Grafo {
 	private int numeroNodos; // No. of vertices
-	private LinkedList<Integer> listaAdyacencias[]; // Adjacency List
+	//private LinkedList<Integer> listaAdyacencias[];
+	private List<List<Integer>> listaAdyacencias;// Adjacency List
 
 	// Constructor
 	public Grafo(int v) {
 		numeroNodos = v;
-		listaAdyacencias = new LinkedList[v];
+		listaAdyacencias = new ArrayList<List<Integer>>(v);
 
 		for (int i = 0; i < v; ++i) {
-			listaAdyacencias[i] = new LinkedList<Integer>();
+			listaAdyacencias.add(new ArrayList<Integer>());
 		}
 	}
 
 	// Function to add an edge into the graph
 	void agregarArista(int nodoOrigen, int nodoDestino) {
-		listaAdyacencias[nodoOrigen].add(nodoDestino);
-		listaAdyacencias[nodoDestino].add(nodoOrigen); // Graph is undirected
+		listaAdyacencias.get(nodoOrigen).add(nodoDestino);
+		listaAdyacencias.get(nodoDestino).add(nodoOrigen);
+//		listaAdyacencias[nodoOrigen].add(nodoDestino);
+//		listaAdyacencias[nodoDestino].add(nodoOrigen); // Graph is undirected
 	}
 
 	// Assigns colors (starting from 0) to all vertices and
@@ -48,7 +52,7 @@ public class Grafo {
 		for (int u = 1; u < numeroNodos; u++) {
 			// Process all adjacent vertices and flag their colors
 			// as unavailable
-			Iterator<Integer> it = listaAdyacencias[u].iterator();
+			Iterator<Integer> it = listaAdyacencias.get(u).iterator();
 
 			while (it.hasNext()) {
 				int i = it.next();
