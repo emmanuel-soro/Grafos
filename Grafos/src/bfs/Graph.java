@@ -67,11 +67,11 @@ class Graph {
 	g.addEdge(1, 2);
 	g.addEdge(2, 0);
 	g.addEdge(2, 3);
-	g.addEdge(3, 3);
+	// g.addEdge(3, 3);
 
-	System.out.println("Following is Breadth First Traversal " + "(starting from vertex 2)");
+	System.out.println("Following is Breadth First Traversal " + "(starting from vertex 0)");
 
-	g.BFS(2);
+	g.BFS(0);
     }
 }
 // This code is contributed by Aakash Hasija
